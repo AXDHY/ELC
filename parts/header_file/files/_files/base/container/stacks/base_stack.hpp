@@ -13,8 +13,6 @@ protected:
 	struct data_t{
 		T _data;
 		data_t*_next;
-
-		constexpr_as(construct<T>(declvalue(const T&)))data_t(const T&a,data_t*b)noexcept(construct<T>.nothrow<const T&>):_data(a),_next(b){}
 	}*_m;
 	size_t _size;
 private:
@@ -74,9 +72,9 @@ public:
 		return _size;
 	}
 
-	static constexpr bool add_nothrow=noexcept(get<data_t>(declvalue(const T&),declvalue(data_t*)));
+	static constexpr bool add_nothrow=noexcept(get<data_t>({declvalue(const T&),declvalue(data_t*)}));
 	size_t add(const T&a)noexcept(add_nothrow){
-		_m=get<data_t>(a,_m);
+		_m=get<data_t>({a,_m});
 		_size++;
 		return size();
 	}
